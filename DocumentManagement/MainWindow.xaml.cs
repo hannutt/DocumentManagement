@@ -22,6 +22,7 @@ namespace DocumentManagement
     /// </summary>
     public partial class MainWindow : Window
     {
+        public String DirectoryPath; // property
         public MainWindow()
         {
             InitializeComponent();
@@ -33,7 +34,7 @@ namespace DocumentManagement
             ComboBoxItem cbi = (ComboBoxItem)options.SelectedItem;
             string selectedText = cbi.Content.ToString();
             Trace.WriteLine(selectedText);
-            string[] files = Directory.GetFiles(@"C:\Users\Omistaja\Desktop\Udemy.Python\", selectedText, SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(DirectoryPath, selectedText, SearchOption.AllDirectories);
             foreach (string file in files)
             {
                 Trace.WriteLine(file);
@@ -49,6 +50,45 @@ namespace DocumentManagement
                 directories.Items.Add(dir);
                 
             }
+        }
+
+        private void directories_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DirectoryPath = (string)directories.SelectedItem + "\\";
+        }
+
+        private void lbFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            var selectedFile = (string)lbFiles.SelectedItem;
+            Process.Start(selectedFile);
+        }
+
+        private void lbFiles_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var selectedFile = (string)lbFiles.SelectedItem;
+            Trace.WriteLine(selectedFile);
+        }
+
+
+
+        private void lbFiles_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var selectedFile = (string)lbFiles.SelectedItem;
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this file?",selectedFile.ToString()+ "Confirmation", MessageBoxButton.YesNo);
+            if (result==MessageBoxResult.Yes)
+            {
+                File.Delete(selectedFile);
+            }
+            else
+            {
+                Trace.WriteLine("Delete cancelled");
+            }
+
+        
+       
+
+
         }
     }
 }

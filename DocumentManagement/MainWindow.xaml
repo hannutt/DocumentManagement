@@ -11,8 +11,8 @@
             <ComboBoxItem Name="pdf">PDF</ComboBoxItem>
             <ComboBoxItem Name="txt">*.txt</ComboBoxItem>
         </ComboBox>
-        <ListBox x:Name="lbFiles" Margin="310,56,95,109"/>
-        <ComboBox x:Name="directories" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120"/>
+        <ListBox x:Name="lbFiles" Margin="310,56,95,109" MouseDoubleClick="lbFiles_MouseDoubleClick" MouseRightButtonDown="lbFiles_MouseRightButtonDown" MouseRightButtonUp="lbFiles_MouseRightButtonUp"/>
+        <ComboBox x:Name="directories" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="directories_SelectionChanged"/>
 
 
     </Grid>
