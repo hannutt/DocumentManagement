@@ -23,7 +23,7 @@ namespace DocumentManagement
     public partial class MainWindow : Window
     {
         public String DirectoryPath; // property
-
+        DBconnection conn = new DBconnection();
         public string[] fileList;
         public bool topDirs = false;
         List<string> fileExt = new List<string>();
@@ -31,6 +31,7 @@ namespace DocumentManagement
         {
             InitializeComponent();
             listDirectories();
+            conn.fetchSqlData();
         }
 
         private void options_SelectionChanged(object sender, SelectionChangedEventArgs e)
