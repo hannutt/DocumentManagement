@@ -13,6 +13,10 @@
         </ComboBox>
         <ListBox x:Name="lbFiles" Margin="310,56,95,109" MouseDoubleClick="lbFiles_MouseDoubleClick" MouseRightButtonDown="lbFiles_MouseRightButtonDown" MouseRightButtonUp="lbFiles_MouseRightButtonUp"/>
         <ComboBox x:Name="directories" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="directories_SelectionChanged"/>
+        <CheckBox x:Name="mainDirs" Content="Top dirs only" HorizontalAlignment="Left" Margin="166,21,0,0" VerticalAlignment="Top" Checked="mainDirs_Checked" Unchecked="mainDirs_Unchecked"/>
+        <TextBox x:Name="fileExtensions" HorizontalAlignment="Left" Margin="10,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.1,-1"/>
+        <Button x:Name="addFileExtensions" Content="Add" HorizontalAlignment="Left" Margin="90,133,0,0" VerticalAlignment="Top" Click="addFileExtensions_Click"/>
+        <Button x:Name="serachBtn" Content="Search" HorizontalAlignment="Left" Margin="30,133,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.404,0.804" Click="serachBtn_Click"/>
 
 
     </Grid>

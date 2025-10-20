@@ -23,6 +23,10 @@ namespace DocumentManagement
     public partial class MainWindow : Window
     {
         public String DirectoryPath; // property
+
+        public string[] fileList;
+        public bool topDirs = false;
+        List<string> fileExt = new List<string>();
         public MainWindow()
         {
             InitializeComponent();
@@ -34,14 +38,26 @@ namespace DocumentManagement
             ComboBoxItem cbi = (ComboBoxItem)options.SelectedItem;
             string selectedText = cbi.Content.ToString();
             Trace.WriteLine(selectedText);
-            string[] files = Directory.GetFiles(DirectoryPath, selectedText, SearchOption.AllDirectories);
-            foreach (string file in files)
+            //jos topdirs on true, etsitään vain pääkansiot ilman alikansioita
+            if (topDirs)
             {
-                Trace.WriteLine(file);
-                lbFiles.Items.Add(file);
+               fileList = Directory.GetFiles(DirectoryPath, selectedText, SearchOption.TopDirectoryOnly);
 
             }
+            else
+            {
+                fileList = Directory.GetFiles(DirectoryPath, selectedText, SearchOption.AllDirectories);
+
+            }
+
+                foreach (string file in fileList)
+                {
+                    Trace.WriteLine(file);
+                    lbFiles.Items.Add(file);
+
+                }
         }
+        //etsii hakemistot c-levyltä.
         private void listDirectories()
         {
             string[] dirs = Directory.GetDirectories("C:\\");
@@ -52,11 +68,13 @@ namespace DocumentManagement
             }
         }
 
+        //tallentaa valitun tiedostokansion directorypath muuttujaan
         private void directories_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DirectoryPath = (string)directories.SelectedItem + "\\";
         }
 
+        //avaa valitun tiedostotn tuplaklikkauksella
         private void lbFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
@@ -71,7 +89,7 @@ namespace DocumentManagement
         }
 
 
-
+        //toteuttaa valitun tiedoston poiston hiiren oikealla painikkeella
         private void lbFiles_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             var selectedFile = (string)lbFiles.SelectedItem;
@@ -84,11 +102,46 @@ namespace DocumentManagement
             {
                 Trace.WriteLine("Delete cancelled");
             }
+        }
 
-        
-       
+        //jos checkbox on valittu
+        private void mainDirs_Checked(object sender, RoutedEventArgs e)
+        {
+            topDirs = true;
 
+        }
+        //jos checkboxia ei ole valittu
+        private void mainDirs_Unchecked(object sender, RoutedEventArgs e)
+        {
+            topDirs = false;
+        }
+        //lisää käyttäjän syöttämät tiedostopäätteet fileExt listaan
+        private void addFileExtensions_Click(object sender, RoutedEventArgs e)
+        {
+            string ext = fileExtensions.Text;
+            fileExt.Add(ext);
+            fileExtensions.Text = "";
+            
 
+        }
+
+        //2 for each silmukkaa, ensimmäinen käy läpi fileExtension
+        //listan, joka sisältää käyttäjän syöttämät tiedostopäätteet
+        //*.txt, *.jpg jne jokaisella päättellä etsitään directory getfiles
+        //metodin avulla tiedostoja ja tallentaa löydetyt tiedostot
+        //filelist listaan toinen silmukka käy läpi filelist sisällön
+        //ja tulostaa alkiot  listbox elementtiin
+        private void serachBtn_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var ext in fileExt)
+            {
+                fileList = Directory.GetFiles(DirectoryPath, ext, SearchOption.TopDirectoryOnly);
+                foreach (var file in fileList)
+                {
+                    lbFiles.Items.Add(file);
+                    
+                }
+            }
         }
     }
 }
