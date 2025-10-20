@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:DocumentManagement"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid x:Name="extensionTag">
+    <Grid x:Name="extensionTag" Background="#FFBBD9DC">
         <ComboBox x:Name="options" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="options_SelectionChanged">
-            
+
         </ComboBox>
         <ListBox x:Name="lbFiles" Margin="310,56,95,109" MouseDoubleClick="lbFiles_MouseDoubleClick" MouseRightButtonDown="lbFiles_MouseRightButtonDown" MouseRightButtonUp="lbFiles_MouseRightButtonUp" Background="#FFB9C4C3"/>
         <ComboBox x:Name="directories" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="directories_SelectionChanged"/>
@@ -17,10 +17,11 @@
         <Button x:Name="addFileExtensions" Content="Add ext." HorizontalAlignment="Left" Margin="82,138,0,0" VerticalAlignment="Top" Click="addFileExtensions_Click" RenderTransformOrigin="-0.696,0.286" Background="#FFB9C4C3"/>
         <Button x:Name="serachBtn" Content="Search" HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.404,0.804" Click="serachBtn_Click" Background="#FFB9C4C3"/>
         <CheckBox x:Name="addExtensionToDB" Content="Add ext to DB" HorizontalAlignment="Left" Margin="10,191,0,0" VerticalAlignment="Top" Checked="addExtensionToDB_Checked" Unchecked="addExtensionToDB_Unchecked"/>
-        <TextBox x:Name="extText" HorizontalAlignment="Left" Margin="10,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
-        <Button x:Name="savedbButton" Content="Save" HorizontalAlignment="Left" Margin="10,251,0,0" VerticalAlignment="Top" Visibility="Hidden" Click="savedbButton_Click"/>
-        <TextBox x:Name="searchFileTxt" HorizontalAlignment="Left" Margin="10,261,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.311,0.429"/>
-        <Button x:Name="searchFileBtn" Content="Search" HorizontalAlignment="Left" Margin="10,304,0,0" VerticalAlignment="Top" Click="searchFileBtn_Click"/>
+        <TextBox x:Name="extText" HorizontalAlignment="Left" Margin="10,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <Button x:Name="savedbButton" Content="Save" HorizontalAlignment="Left" Margin="140,226,0,0" VerticalAlignment="Top" Visibility="Hidden" Click="savedbButton_Click"/>
+        <TextBox x:Name="searchFileTxt" HorizontalAlignment="Left" Margin="10,285,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.311,0.429" Visibility="Hidden"/>
+        <Button x:Name="searchFileBtn" Content="Search" HorizontalAlignment="Left" Margin="135,284,0,0" VerticalAlignment="Top" Click="searchFileBtn_Click" Visibility="Hidden"/>
+        <CheckBox x:Name="partialSearch" Content="Partial search&#x9;" HorizontalAlignment="Left" Margin="10,256,0,0" VerticalAlignment="Top" Click="partialSearch_Click" Unchecked="partialSearch_Unchecked"/>
 
 
     </Grid>

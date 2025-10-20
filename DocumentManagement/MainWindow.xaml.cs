@@ -42,7 +42,7 @@ namespace DocumentManagement
             //jos topdirs on true, etsitään vain pääkansiot ilman alikansioita
             if (topDirs)
             {
-               fileList = Directory.GetFiles(DirectoryPath, selectedText, SearchOption.TopDirectoryOnly);
+                fileList = Directory.GetFiles(DirectoryPath, selectedText, SearchOption.TopDirectoryOnly);
 
             }
             else
@@ -51,12 +51,12 @@ namespace DocumentManagement
 
             }
 
-                foreach (string file in fileList)
-                {
-                    Trace.WriteLine(file);
-                    lbFiles.Items.Add(file);
+            foreach (string file in fileList)
+            {
+                Trace.WriteLine(file);
+                lbFiles.Items.Add(file);
 
-                }
+            }
         }
         //etsii hakemistot c-levyltä.
         private void listDirectories()
@@ -65,7 +65,7 @@ namespace DocumentManagement
             foreach (string dir in dirs)
             {
                 directories.Items.Add(dir);
-                
+
             }
         }
 
@@ -93,18 +93,26 @@ namespace DocumentManagement
         //toteuttaa valitun tiedoston poiston hiiren oikealla painikkeella
         private void lbFiles_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var selectedFile = (string)lbFiles.SelectedItem;
-            MessageBoxResult result = MessageBox.Show("Do you want to delete this file?",selectedFile.ToString()+ "Confirmation", MessageBoxButton.YesNo);
-            if (result==MessageBoxResult.Yes)
+            try
             {
-                File.Delete(selectedFile);
+                var selectedFile = (string)lbFiles.SelectedItem;
+                MessageBoxResult result = MessageBox.Show("Do you want to delete this file?", selectedFile.ToString() + "Confirmation", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    File.Delete(selectedFile);
+                }
+                else
+                {
+                    Trace.WriteLine("Delete cancelled");
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                Trace.WriteLine("Delete cancelled");
+                MessageBox.Show(ex.Message);
+
             }
         }
-
         //jos checkbox on valittu
         private void mainDirs_Checked(object sender, RoutedEventArgs e)
         {
@@ -122,7 +130,7 @@ namespace DocumentManagement
             string ext = fileExtensions.Text;
             fileExt.Add(ext);
             fileExtensions.Text = "";
-            
+
 
         }
 
@@ -134,20 +142,29 @@ namespace DocumentManagement
         //ja tulostaa alkiot  listbox elementtiin
         private void serachBtn_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var ext in fileExt)
+            try
             {
-                fileList = Directory.GetFiles(DirectoryPath, ext, SearchOption.TopDirectoryOnly);
-                foreach (var file in fileList)
+                foreach (var ext in fileExt)
                 {
-                    lbFiles.Items.Add(file);
-                    
+                    fileList = Directory.GetFiles(DirectoryPath, ext, SearchOption.TopDirectoryOnly);
+                    foreach (var file in fileList)
+                    {
+                        lbFiles.Items.Add(file);
+
+                    }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
             }
         }
 
         private void addExtensionToDB_Checked(object sender, RoutedEventArgs e)
         {
-            extText.Visibility=Visibility.Visible;
+            extText.Visibility = Visibility.Visible;
             savedbButton.Visibility = Visibility.Visible;
         }
 
@@ -163,16 +180,49 @@ namespace DocumentManagement
             conn.saveValues(extText);
             extText.Text = "";
         }
-
+        //tiedoston etsiminen osittaisella nimellä esim readme.txt
+        //löytyy readme* hakusanalla
         private void searchFileBtn_Click(object sender, RoutedEventArgs e)
         {
-            string partialFileName=searchFileTxt.Text;
-            DirectoryInfo dir = new DirectoryInfo(DirectoryPath);
-            FileInfo[] files = dir.GetFiles(partialFileName, SearchOption.TopDirectoryOnly);
-            foreach (var item in files)
+            try
             {
-                lbFiles.Items.Add(DirectoryPath+item);
+                string partialFileName = searchFileTxt.Text;
+                DirectoryInfo dir = new DirectoryInfo(DirectoryPath);
+                FileInfo[] files = dir.GetFiles(partialFileName, SearchOption.TopDirectoryOnly);
+                foreach (var item in files)
+                {
+                    if (files.Length > 0)
+                    {
+                        lbFiles.Items.Add(DirectoryPath + item);
+
+                    }
+                    else
+                    {
+                        lbFiles.Items.Add("File not found");
+                    }
+
+                }
+
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+
+            }
+
+        }
+
+        private void partialSearch_Click(object sender, RoutedEventArgs e)
+        {
+            searchFileTxt.Visibility = Visibility.Visible;
+            searchFileBtn.Visibility = Visibility.Visible;
+        }
+
+        private void partialSearch_Unchecked(object sender, RoutedEventArgs e)
+        {
+            searchFileTxt.Visibility = Visibility.Hidden;
+            searchFileBtn.Visibility = Visibility.Hidden;
         }
     }
 }

@@ -11,9 +11,10 @@ namespace DocumentManagement
 {
     public class DBconnection
     {
-        public void fetchSqlData(System.Windows.Controls.ComboBox options) {
-            List<String>sqlData=new List<String>();
-          
+        public void fetchSqlData(System.Windows.Controls.ComboBox options)
+        {
+            List<String> sqlData = new List<String>();
+
             string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
             var connection = new SQLiteConnection(connectionString);
             // Open the connection
@@ -24,13 +25,14 @@ namespace DocumentManagement
             // Loop through the result set and read data
             while (reader.Read())
             {
-               
+
                 sqlData.Add(reader.GetString(1));
-                
+
             }
             options.ItemsSource = sqlData;
         }
-        public void saveValues(System.Windows.Controls.TextBox extText) {
+        public void saveValues(System.Windows.Controls.TextBox extText)
+        {
 
 
             string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
@@ -46,8 +48,8 @@ namespace DocumentManagement
     }
 
 
-    
+
 }
 
 
-   
+
