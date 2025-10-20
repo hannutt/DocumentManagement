@@ -31,7 +31,7 @@ namespace DocumentManagement
         {
             InitializeComponent();
             listDirectories();
-            conn.fetchSqlData();
+            conn.fetchSqlData(options);
         }
 
         private void options_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -142,6 +142,36 @@ namespace DocumentManagement
                     lbFiles.Items.Add(file);
                     
                 }
+            }
+        }
+
+        private void addExtensionToDB_Checked(object sender, RoutedEventArgs e)
+        {
+            extText.Visibility=Visibility.Visible;
+            savedbButton.Visibility = Visibility.Visible;
+        }
+
+        private void addExtensionToDB_Unchecked(object sender, RoutedEventArgs e)
+        {
+            extText.Visibility = Visibility.Hidden;
+            savedbButton.Visibility = Visibility.Hidden;
+
+        }
+
+        private void savedbButton_Click(object sender, RoutedEventArgs e)
+        {
+            conn.saveValues(extText);
+            extText.Text = "";
+        }
+
+        private void searchFileBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string partialFileName=searchFileTxt.Text;
+            DirectoryInfo dir = new DirectoryInfo(DirectoryPath);
+            FileInfo[] files = dir.GetFiles(partialFileName, SearchOption.TopDirectoryOnly);
+            foreach (var item in files)
+            {
+                lbFiles.Items.Add(DirectoryPath+item);
             }
         }
     }

@@ -1,4 +1,4 @@
-Project keywords: C#, WPF, File processing
+Project keywords: C#, WPF, File processing, SQLite
 
 ABOUT THE APP
 
@@ -8,12 +8,15 @@ AUTOMATIC SEARCH FOR FOLDERS FROM DRIVE C
 
 When the application is launched, the listDirectories function is called. This function collects all the root directories of the C drive using the C# Directory.GetDirectories method. The found directories are stored in a list and displayed in a ComboBox element in the UI, from which the user can select a folder.
 
-FILE SEARCH
+FILE SEARCH BY FILE EXTENSION
 
-The user can search for files in a selected folder based on one or more file extensions. The user can choose whether to extend the search to subfolders or only to the parent folder using the CheckBox elements in the UI. Below is an example image where the user has retrieved only .txt and 
-.png files from the C:\codes folder. The result is displayed in a WPF listbox element.
+The user can search for files in a selected folder based on one or more file extensions. The user can choose whether to extend the search to subfolders or only to the parent folder using the CheckBox elements in the UI. Below is an example image where the user has retrieved only .txt and .png files from the C:\codes folder. The result is displayed in a WPF listbox element.
 
 ![Alt text](./images/file_ext_search.png)
+
+SEARCH FILES BY PARTIAL FILENAME
+
+The user can search for files by their partial name. For example, a file named readme.txt can be found by typing readme* in the text field of the user interface. This feature is implemented using the System.IO.DirectoryInfo and System.IO.FileInfo classes.
 
 USING FOUND FILES
 
