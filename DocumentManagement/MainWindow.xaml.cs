@@ -26,7 +26,8 @@ namespace DocumentManagement
         DBconnection conn = new DBconnection();
         public string[] fileList;
         public bool topDirs = false;
-        List<string> fileExt = new List<string>();
+        public bool Csearch=false;
+        public string[] fileExtensionList;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,8 +37,9 @@ namespace DocumentManagement
 
         private void options_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBoxItem cbi = (ComboBoxItem)options.SelectedItem;
-            string selectedText = cbi.Content.ToString();
+
+            //ComboBoxItem cbi = (ComboBoxItem)options.SelectedItem;
+            string selectedText = (String)options.SelectedItem;
             Trace.WriteLine(selectedText);
             //jos topdirs on true, etsitään vain pääkansiot ilman alikansioita
             if (topDirs)
@@ -128,7 +130,8 @@ namespace DocumentManagement
         private void addFileExtensions_Click(object sender, RoutedEventArgs e)
         {
             string ext = fileExtensions.Text;
-            fileExt.Add(ext);
+            fileExtensionList=ext.Split(',');
+            selectedItems.Content += ext;
             fileExtensions.Text = "";
 
 
@@ -144,7 +147,7 @@ namespace DocumentManagement
         {
             try
             {
-                foreach (var ext in fileExt)
+                foreach (var ext in fileExtensionList)
                 {
                     fileList = Directory.GetFiles(DirectoryPath, ext, SearchOption.TopDirectoryOnly);
                     foreach (var file in fileList)
@@ -172,9 +175,7 @@ namespace DocumentManagement
         {
             extText.Visibility = Visibility.Hidden;
             savedbButton.Visibility = Visibility.Hidden;
-
         }
-
         private void savedbButton_Click(object sender, RoutedEventArgs e)
         {
             conn.saveValues(extText);
@@ -186,9 +187,10 @@ namespace DocumentManagement
         {
             try
             {
+               
                 string partialFileName = searchFileTxt.Text;
                 DirectoryInfo dir = new DirectoryInfo(DirectoryPath);
-                FileInfo[] files = dir.GetFiles(partialFileName, SearchOption.TopDirectoryOnly);
+                FileInfo[] files = dir.GetFiles(partialFileName+"*", SearchOption.TopDirectoryOnly);
                 foreach (var item in files)
                 {
                     if (files.Length > 0)
@@ -200,29 +202,43 @@ namespace DocumentManagement
                     {
                         lbFiles.Items.Add("File not found");
                     }
-
                 }
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-
-
             }
-
         }
-
-        private void partialSearch_Click(object sender, RoutedEventArgs e)
-        {
-            searchFileTxt.Visibility = Visibility.Visible;
-            searchFileBtn.Visibility = Visibility.Visible;
-        }
+      
 
         private void partialSearch_Unchecked(object sender, RoutedEventArgs e)
         {
             searchFileTxt.Visibility = Visibility.Hidden;
             searchFileBtn.Visibility = Visibility.Hidden;
+
+        }
+
+        private void searchCdrive_Checked(object sender, RoutedEventArgs e)
+        {
+            Csearch = true;
+        }
+
+        private void backupBtn_Click(object sender, RoutedEventArgs e)
+        {
+            conn.BackUpFile(backupInput.Text);
+        }
+
+        private void partialSearch_Checked(object sender, RoutedEventArgs e)
+        {
+            searchFileTxt.Visibility = Visibility.Visible;
+            searchFileBtn.Visibility = Visibility.Visible;
+
+        }
+
+
+        private void readBackup_Click(object sender, RoutedEventArgs e)
+        {
+            conn.readBackupFile(backupInput.Text,lbFiles);
         }
     }
 }

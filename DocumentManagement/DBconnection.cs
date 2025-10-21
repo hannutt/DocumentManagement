@@ -1,12 +1,15 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Data.SQLite;
+using System.Xml.Linq;
 namespace DocumentManagement
 {
     public class DBconnection
@@ -30,6 +33,7 @@ namespace DocumentManagement
 
             }
             options.ItemsSource = sqlData;
+            connection.Close();
         }
         public void saveValues(System.Windows.Controls.TextBox extText)
         {
@@ -43,10 +47,64 @@ namespace DocumentManagement
             var command = new SQLiteCommand(query, connection);
             command.Parameters.AddWithValue("@filetype", extText.Text);
             command.ExecuteNonQuery();
+            connection.Close();
+
+        }
+
+        public void BackUpFile(string savefile)
+        {
+            try
+            {
+                var filename=Path.GetFileName(savefile);
+                //var savefile = "C:\\Users\\Omistaja\\Desktop\\history3.txt";
+                var lines = File.ReadLines(savefile);
+                string textResult = "";
+                foreach (var line in lines)
+                {
+                    textResult += line;
+                }
+
+                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
+                var connection = new SQLiteConnection(connectionString);
+                //string valueToSave=extText.Text;
+                string query = "INSERT INTO backups (filename,content) VALUES (@filename,@content)";
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@filename", filename);
+                command.Parameters.AddWithValue("@content",textResult);
+                command.ExecuteNonQuery();
+                connection.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+        public void readBackupFile(string fname, System.Windows.Controls.ListBox lbFiles)
+        {
+            string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
+            var connection = new SQLiteConnection(connectionString);
+            // Open the connection
+            connection.Open();
+            string query = $"SELECT content FROM backups WHERE filename='{fname}'";
+            var command = new SQLiteCommand(query, connection);
+        
+            //command.Parameters.Add(new SqlParameter("@filename",fname.ToString()));
+            var reader = command.ExecuteReader();
+            string data="";
+            while (reader.Read())
+            {
+                data=(reader.GetString(0));
+               
+            }
+            lbFiles.Items.Add(data);
+            
 
         }
     }
-
+    
 
 
 }
