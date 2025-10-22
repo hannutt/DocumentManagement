@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -51,11 +52,43 @@ namespace DocumentManagement
 
         }
 
+        public void readSavedFiles(System.Windows.Controls.ComboBox savedFilescb)
+        {
+            try
+            {
+                List<String> Files = new List<string>();
+                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
+                var connection = new SQLiteConnection(connectionString);
+                //string valueToSave=extText.Text;
+                string query = "SELECT filename FROM backups";
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+
+                        Files.Add(reader.GetString(0));
+
+                    }
+                    savedFilescb.ItemsSource = Files;
+                    connection.Close();
+                }
+                connection.Close();
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+                
+              
+        }
         public void BackUpFile(string savefile)
         {
             try
             {
-                var filename=Path.GetFileName(savefile);
+                string savingTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                var filename = Path.GetFileName(savefile);
                 //var savefile = "C:\\Users\\Omistaja\\Desktop\\history3.txt";
                 var lines = File.ReadLines(savefile);
                 string textResult = "";
@@ -67,11 +100,12 @@ namespace DocumentManagement
                 string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
                 var connection = new SQLiteConnection(connectionString);
                 //string valueToSave=extText.Text;
-                string query = "INSERT INTO backups (filename,content) VALUES (@filename,@content)";
+                string query = "INSERT INTO backups (filename,content,savetime) VALUES (@filename,@content,@savetime)";
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
                 command.Parameters.AddWithValue("@filename", filename);
-                command.Parameters.AddWithValue("@content",textResult);
+                command.Parameters.AddWithValue("@content", textResult);
+                command.Parameters.AddWithValue("@savetime", savingTime);
                 command.ExecuteNonQuery();
                 connection.Close();
 
@@ -90,21 +124,21 @@ namespace DocumentManagement
             connection.Open();
             string query = $"SELECT content FROM backups WHERE filename='{fname}'";
             var command = new SQLiteCommand(query, connection);
-        
+
             //command.Parameters.Add(new SqlParameter("@filename",fname.ToString()));
             var reader = command.ExecuteReader();
-            string data="";
+            string data = "";
             while (reader.Read())
             {
-                data=(reader.GetString(0));
-               
+                data = (reader.GetString(0));
+
             }
             lbFiles.Items.Add(data);
-            
+
 
         }
     }
-    
+
 
 
 }

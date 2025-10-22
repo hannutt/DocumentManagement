@@ -33,6 +33,7 @@ namespace DocumentManagement
             InitializeComponent();
             listDirectories();
             conn.fetchSqlData(options);
+            conn.readSavedFiles(savedFilescb);
         }
 
         private void options_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -209,8 +210,6 @@ namespace DocumentManagement
                 MessageBox.Show(ex.Message);
             }
         }
-      
-
         private void partialSearch_Unchecked(object sender, RoutedEventArgs e)
         {
             searchFileTxt.Visibility = Visibility.Hidden;
