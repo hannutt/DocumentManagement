@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DocumentManagement"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" KeyDown="Window_KeyDown">
     <Grid x:Name="extensionTag" Background="#FFBBD9DC">
         <ComboBox x:Name="options" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="options_SelectionChanged">
 
         </ComboBox>
-        <ListBox x:Name="lbFiles" Margin="310,56,95,109" MouseDoubleClick="lbFiles_MouseDoubleClick" MouseRightButtonDown="lbFiles_MouseRightButtonDown" MouseRightButtonUp="lbFiles_MouseRightButtonUp" Background="#FFB9C4C3"/>
+        <ListBox x:Name="lbFiles" Margin="375,75,30,90" MouseDoubleClick="lbFiles_MouseDoubleClick" MouseRightButtonDown="lbFiles_MouseRightButtonDown" MouseRightButtonUp="lbFiles_MouseRightButtonUp" Background="#FFB9C4C3"/>
         <ComboBox x:Name="directories" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="directories_SelectionChanged"/>
         <CheckBox x:Name="mainDirs" Content="Top dirs only" HorizontalAlignment="Left" Margin="154,9,0,0" VerticalAlignment="Top" Checked="mainDirs_Checked" Unchecked="mainDirs_Unchecked"/>
         <TextBox x:Name="fileExtensions" HorizontalAlignment="Left" Margin="10,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.1,-1"/>
@@ -26,8 +26,9 @@
         <Label x:Name="selectedItems" Content="" HorizontalAlignment="Left" Margin="420,21,0,0" VerticalAlignment="Top" Width="135"/>
         <TextBox x:Name="backupInput" HorizontalAlignment="Left" Margin="8,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="backupBtn" Content="Backup" HorizontalAlignment="Left" Margin="8,370,0,0" VerticalAlignment="Top" Click="backupBtn_Click"/>
-        <Button x:Name="readBackup" Content="Button" HorizontalAlignment="Left" Margin="66,370,0,0" VerticalAlignment="Top" Click="readBackup_Click"/>
+        <Button x:Name="readBackup" Content="Read" HorizontalAlignment="Left" Margin="66,370,0,0" VerticalAlignment="Top" Click="readBackup_Click"/>
         <ComboBox x:Name="savedFilescb" HorizontalAlignment="Left" Margin="140,335,0,0" VerticalAlignment="Top" Width="120"/>
+        <CheckBox x:Name="metadata" Content="Metadata" HorizontalAlignment="Left" Margin="240,259,0,0" VerticalAlignment="Top" Checked="metadata_Checked"/>
 
 
     </Grid>

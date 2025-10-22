@@ -24,9 +24,11 @@ namespace DocumentManagement
     {
         public String DirectoryPath; // property
         DBconnection conn = new DBconnection();
+        KeyboardCombinations kb = new KeyboardCombinations();
         public string[] fileList;
         public bool topDirs = false;
-        public bool Csearch=false;
+        public bool Csearch = false;
+        public bool mdata = false;
         public string[] fileExtensionList;
         public MainWindow()
         {
@@ -131,7 +133,7 @@ namespace DocumentManagement
         private void addFileExtensions_Click(object sender, RoutedEventArgs e)
         {
             string ext = fileExtensions.Text;
-            fileExtensionList=ext.Split(',');
+            fileExtensionList = ext.Split(',');
             selectedItems.Content += ext;
             fileExtensions.Text = "";
 
@@ -188,10 +190,10 @@ namespace DocumentManagement
         {
             try
             {
-               
+
                 string partialFileName = searchFileTxt.Text;
                 DirectoryInfo dir = new DirectoryInfo(DirectoryPath);
-                FileInfo[] files = dir.GetFiles(partialFileName+"*", SearchOption.TopDirectoryOnly);
+                FileInfo[] files = dir.GetFiles(partialFileName + "*", SearchOption.TopDirectoryOnly);
                 foreach (var item in files)
                 {
                     if (files.Length > 0)
@@ -210,6 +212,7 @@ namespace DocumentManagement
                 MessageBox.Show(ex.Message);
             }
         }
+
         private void partialSearch_Unchecked(object sender, RoutedEventArgs e)
         {
             searchFileTxt.Visibility = Visibility.Hidden;
@@ -237,7 +240,29 @@ namespace DocumentManagement
 
         private void readBackup_Click(object sender, RoutedEventArgs e)
         {
-            conn.readBackupFile(backupInput.Text,lbFiles);
+            conn.readBackupFile(backupInput.Text, lbFiles);
+        }
+
+        private void metadata_Checked(object sender, RoutedEventArgs e)
+        {
+            mdata = true;
+
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.K)
+            {
+                var selectedFile = (string)lbFiles.SelectedItem;
+                kb.copyFile(selectedFile);
+
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key==Key.H)
+            {
+                var selectedFile = (string)lbFiles.SelectedItem;
+                kb.hideFile(selectedFile);
+            }
         }
     }
 }

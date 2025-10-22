@@ -1,4 +1,4 @@
-Project keywords: C#, WPF, File processing, SQLite
+Project keywords: C#, WPF, .NET, File processing, SQLite
 
 ABOUT THE APP
 
@@ -22,3 +22,12 @@ USING FOUND FILES
 
 Since the found files are displayed in a listBox element, the user can access them. Double-clicking on a file opens it using the C# Process.Start method. By right-clicking the mouse, the user can delete the selected file using the C# File.Delete method. Before deleting, the application displays a MessageBox element with yes/no buttons for the user to confirm the deletion or cancel the delete operation.
 
+KEYBOARD SHORTCUTS FOR FILE OPERATIONS
+
+The application has keyboard shortcuts for file operations, and all keyboard shortcut methods are in their own KeyboardCombinations class.
+The keyboard shortcuts are: CTRL+K. This combination is for copying files. When the user has selected the file to be copied with a mouse click and presses ctrl+k, the application calls a method that first creates an instance of the FolderBrowserDialog class and then opens the folder structure of the C drive in graphical form.
+
+The user can choose where to copy the selected file by selecting the folder and clicking the OK button.
+Finally, the copying of files is done using the Copy method of the File class.
+
+CTRL+H Hides the selected file. This is done using the File.SetAttribute method.
