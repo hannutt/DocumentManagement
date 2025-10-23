@@ -18,6 +18,10 @@ SEARCH FILES BY PARTIAL FILENAME
 
 The user can search for files by their partial name. For example, a file named readme.txt can be found by typing readme* in the text field of the user interface. This feature is implemented using the System.IO.DirectoryInfo and System.IO.FileInfo classes.
 
+SEARCH FOR FILES FROM SPECIFIC FOLDERS
+
+The user can select specific folders to search for a file. For example, the user can select folders A, B, and C and type the file name into the text box element of the user interface to search for. The selected folders are stored in a C# array and iterated over using a for loop and the Directory.GetFiles method. If a file matching the user's search is found in the folders, it is displayed in a WPF ListBox element.
+
 USING FOUND FILES
 
 Since the found files are displayed in a listBox element, the user can access them. Double-clicking on a file opens it using the C# Process.Start method. By right-clicking the mouse, the user can delete the selected file using the C# File.Delete method. Before deleting, the application displays a MessageBox element with yes/no buttons for the user to confirm the deletion or cancel the delete operation.

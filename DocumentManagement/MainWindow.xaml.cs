@@ -25,7 +25,9 @@ namespace DocumentManagement
         public String DirectoryPath; // property
         DBconnection conn = new DBconnection();
         KeyboardCombinations kb = new KeyboardCombinations();
+        FileSearch fs = new FileSearch();
         public string[] fileList;
+        List<string> dirList= new List<string>();
         public bool topDirs = false;
         public bool Csearch = false;
         public bool mdata = false;
@@ -58,7 +60,7 @@ namespace DocumentManagement
 
             foreach (string file in fileList)
             {
-                Trace.WriteLine(file);
+               
                 lbFiles.Items.Add(file);
 
             }
@@ -188,29 +190,8 @@ namespace DocumentManagement
         //löytyy readme* hakusanalla
         private void searchFileBtn_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-
-                string partialFileName = searchFileTxt.Text;
-                DirectoryInfo dir = new DirectoryInfo(DirectoryPath);
-                FileInfo[] files = dir.GetFiles(partialFileName + "*", SearchOption.TopDirectoryOnly);
-                foreach (var item in files)
-                {
-                    if (files.Length > 0)
-                    {
-                        lbFiles.Items.Add(DirectoryPath + item);
-
-                    }
-                    else
-                    {
-                        lbFiles.Items.Add("File not found");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            fs.searchPartialFileName(searchFileTxt.Text,lbFiles,DirectoryPath);
+        
         }
 
         private void partialSearch_Unchecked(object sender, RoutedEventArgs e)
@@ -251,18 +232,33 @@ namespace DocumentManagement
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            var selectedFile = (string)lbFiles.SelectedItem;
 
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.K)
             {
-                var selectedFile = (string)lbFiles.SelectedItem;
+               
                 kb.copyFile(selectedFile);
 
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key==Key.H)
             {
-                var selectedFile = (string)lbFiles.SelectedItem;
+                
                 kb.hideFile(selectedFile);
             }
+        }
+
+        private void addDir_Click(object sender, RoutedEventArgs e)
+        {
+            string directory = (String)directories.SelectedItem;
+            dirList.Add(directory);
+            selectedItems.Content += directory;
+           
+           
+        }
+       
+        private void folderSearch_Click(object sender, RoutedEventArgs e)
+        {
+            fs.searchFolders(dirList,fName.Text,lbFiles);
         }
     }
 }

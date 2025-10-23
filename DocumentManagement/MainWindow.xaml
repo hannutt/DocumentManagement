@@ -29,6 +29,9 @@
         <Button x:Name="readBackup" Content="Read" HorizontalAlignment="Left" Margin="66,370,0,0" VerticalAlignment="Top" Click="readBackup_Click"/>
         <ComboBox x:Name="savedFilescb" HorizontalAlignment="Left" Margin="140,335,0,0" VerticalAlignment="Top" Width="120"/>
         <CheckBox x:Name="metadata" Content="Metadata" HorizontalAlignment="Left" Margin="240,259,0,0" VerticalAlignment="Top" Checked="metadata_Checked"/>
+        <Button x:Name="addDir" Content="Add dir" HorizontalAlignment="Left" Margin="11,85,0,0" VerticalAlignment="Top" Click="addDir_Click"/>
+        <Button x:Name="folderSearch" Content="Search folders" HorizontalAlignment="Left" Margin="90,85,0,0" VerticalAlignment="Top" Click="folderSearch_Click"/>
+        <TextBox x:Name="fName" HorizontalAlignment="Left" Margin="191,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
 
     </Grid>
