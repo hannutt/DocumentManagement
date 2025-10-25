@@ -15,6 +15,7 @@ namespace DocumentManagement
 {
     public class DBconnection
     {
+
         public void fetchSqlData(System.Windows.Controls.ComboBox options)
         {
             List<String> sqlData = new List<String>();
@@ -118,22 +119,30 @@ namespace DocumentManagement
         }
         public void readBackupFile(string fname, System.Windows.Controls.ListBox lbFiles)
         {
-            string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
-            var connection = new SQLiteConnection(connectionString);
-            // Open the connection
-            connection.Open();
-            string query = $"SELECT content FROM backups WHERE filename='{fname}'";
-            var command = new SQLiteCommand(query, connection);
-
-            //command.Parameters.Add(new SqlParameter("@filename",fname.ToString()));
-            var reader = command.ExecuteReader();
-            string data = "";
-            while (reader.Read())
+            try
             {
-                data = (reader.GetString(0));
+                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
+                var connection = new SQLiteConnection(connectionString);
+                // Open the connection
+                connection.Open();
+                string query = $"SELECT content FROM backups WHERE filename='{fname}'";
+                var command = new SQLiteCommand(query, connection);
 
+                //command.Parameters.Add(new SqlParameter("@filename",fname.ToString()));
+                var reader = command.ExecuteReader();
+                string data = "";
+                while (reader.Read())
+                {
+                    data = (reader.GetString(0));
+
+                }
+                lbFiles.Items.Add(data);
+
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
-            lbFiles.Items.Add(data);
+        
 
 
         }

@@ -15,32 +15,31 @@ namespace DocumentManagement
         public string[] fileList;
         public void searchFolders(List<string> dirList, string fname, System.Windows.Controls.ListBox lbFiles)
         {
-           
+
             for (int i = 0; i < dirList.Count; i++)
             {
                 Trace.WriteLine(dirList[i]);
                 var folderFiles = Directory.GetFiles(dirList[i], fname, SearchOption.AllDirectories);
+                //jos muuttujan ei ole tyhjä, eli jotain löytyy
                 if (folderFiles.Length > 0)
                 {
+                    //lisätään löydetty tiedoston fileList listaan
                     fileList = folderFiles;
                 }
-                
             }
             foreach (string file in fileList)
             {
-                Trace.WriteLine(file);
+               
                 lbFiles.Items.Add(file);
 
             }
-            
+
 
         }
         public void searchPartialFileName(string partialFileName, System.Windows.Controls.ListBox lbFiles, string DirectoryPath)
         {
             try
             {
-
-                
                 DirectoryInfo dir = new DirectoryInfo(DirectoryPath);
                 FileInfo[] files = dir.GetFiles(partialFileName + "*", SearchOption.TopDirectoryOnly);
                 foreach (var item in files)
@@ -64,5 +63,5 @@ namespace DocumentManagement
         }
     }
 
-  
+
 }

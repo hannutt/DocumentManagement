@@ -27,7 +27,7 @@ namespace DocumentManagement
         KeyboardCombinations kb = new KeyboardCombinations();
         FileSearch fs = new FileSearch();
         public string[] fileList;
-        List<string> dirList= new List<string>();
+        List<string> dirList = new List<string>();
         public bool topDirs = false;
         public bool Csearch = false;
         public bool mdata = false;
@@ -60,7 +60,7 @@ namespace DocumentManagement
 
             foreach (string file in fileList)
             {
-               
+
                 lbFiles.Items.Add(file);
 
             }
@@ -190,8 +190,8 @@ namespace DocumentManagement
         //löytyy readme* hakusanalla
         private void searchFileBtn_Click(object sender, RoutedEventArgs e)
         {
-            fs.searchPartialFileName(searchFileTxt.Text,lbFiles,DirectoryPath);
-        
+            fs.searchPartialFileName(searchFileTxt.Text, lbFiles, DirectoryPath);
+
         }
 
         private void partialSearch_Unchecked(object sender, RoutedEventArgs e)
@@ -233,18 +233,22 @@ namespace DocumentManagement
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             var selectedFile = (string)lbFiles.SelectedItem;
-
-            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.K)
+            Dictionary<Key, Action> combinations = new Dictionary<Key, Action>();
+            //lisätään sanakitjaan näppäin ja sitä vastaava metodi, eli K arvo on copyfile jne
+            combinations.Add(Key.K, () => kb.copyFile(selectedFile));
+            combinations.Add(Key.H, () => kb.hideFile(selectedFile));
+            //käydään dict foreachissa läpi
+            foreach (var item in combinations)
             {
-               
-                kb.copyFile(selectedFile);
+                //jos käyttäjä on painanut control + dictissä löytyvää näppäintä
+                if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == item.Key)
+                {
+                    //kutsutaan painettua näppäintä vastaavaa metodia.
+                    combinations[item.Key].Invoke();
+                }
 
             }
-            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key==Key.H)
-            {
-                
-                kb.hideFile(selectedFile);
-            }
+
         }
 
         private void addDir_Click(object sender, RoutedEventArgs e)
@@ -252,13 +256,13 @@ namespace DocumentManagement
             string directory = (String)directories.SelectedItem;
             dirList.Add(directory);
             selectedItems.Content += directory;
-           
-           
+
+
         }
-       
+
         private void folderSearch_Click(object sender, RoutedEventArgs e)
         {
-            fs.searchFolders(dirList,fName.Text,lbFiles);
+            fs.searchFolders(dirList, fName.Text, lbFiles);
         }
     }
 }
