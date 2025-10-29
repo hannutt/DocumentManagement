@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Shapes;
 
@@ -14,6 +15,8 @@ namespace DocumentManagement
 {
     public class KeyboardCombinations
     {
+     
+        DBconnection conn = new DBconnection();
         public void copyFile(string selectedFile)
         {
             try
@@ -39,6 +42,7 @@ namespace DocumentManagement
             try
             {
                 File.SetAttributes(selectedFile, FileAttributes.Hidden);
+                conn.saveHiddenFileName(selectedFile);
 
             } catch (Exception ex)
             {
@@ -47,5 +51,12 @@ namespace DocumentManagement
            
 
         }
+        public void unHideFile(Popup hidddenFilesPopup, System.Windows.Controls.ListBox hdFileList)
+        {
+            hidddenFilesPopup.IsOpen = true;
+            conn.getHiddenFileNames(hidddenFilesPopup,hdFileList);
+            
+        }
     }
+
 }

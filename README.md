@@ -28,10 +28,17 @@ Since the found files are displayed in a listBox element, the user can access th
 
 KEYBOARD SHORTCUTS FOR FILE OPERATIONS
 
-The application has keyboard shortcuts for file operations, and all keyboard shortcut methods are in their own KeyboardCombinations class.
+The application has keyboard shortcuts for file operations, and all keyboard shortcut methods are in their own KeyboardCombinations class.The keyboard shortcuts and their corresponding methods are stored in a C# dictionary object. When the user presses the CTRL key and the shortcut key, the foreach loop checks which key the user pressed and calls the corresponding method using the C# Invoke method.
+
+![Alt text](./images/combinations.png)
+
 The keyboard shortcuts are: CTRL+K. This combination is for copying files. When the user has selected the file to be copied with a mouse click and presses ctrl+k, the application calls a method that first creates an instance of the FolderBrowserDialog class and then opens the folder structure of the C drive in graphical form.
 
-The user can choose where to copy the selected file by selecting the folder and clicking the OK button.
-Finally, the copying of files is done using the Copy method of the File class.
+The user can choose where to copy the selected file by selecting the folder and clicking the OK button. Finally, the copying of files is done using the Copy method of the File class.
 
-CTRL+H Hides the selected file. This is done using the File.SetAttribute method.
+CTRL+H Hides the selected file.
+CTRL+U Unhides a selected file.
+
+HIDING AND SHOWING FILES
+
+The user can hide and unhide the retrieved files with a mouse click. The file path and name of each hidden file are stored in an SQLite database so that the user can track hidden files and unhide them when needed. Hiding and showing files are done using the SetAttribute and FileAttribute methods of the C# Files class.

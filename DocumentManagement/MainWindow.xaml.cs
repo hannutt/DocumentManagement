@@ -235,8 +235,10 @@ namespace DocumentManagement
             var selectedFile = (string)lbFiles.SelectedItem;
             Dictionary<Key, Action> combinations = new Dictionary<Key, Action>();
             //lisätään sanakitjaan näppäin ja sitä vastaava metodi, eli K arvo on copyfile jne
+            //()=> avulla asetetaan parametri
             combinations.Add(Key.K, () => kb.copyFile(selectedFile));
             combinations.Add(Key.H, () => kb.hideFile(selectedFile));
+            combinations.Add(Key.U, () => kb.unHideFile(hidddenFilesPopup, hdFileList));
             //käydään dict foreachissa läpi
             foreach (var item in combinations)
             {
@@ -263,6 +265,22 @@ namespace DocumentManagement
         private void folderSearch_Click(object sender, RoutedEventArgs e)
         {
             fs.searchFolders(dirList, fName.Text, lbFiles);
+        }
+
+        private void hdFileList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string fileName = (String)hdFileList.SelectedItem;
+            try
+            {
+                File.SetAttributes(fileName, FileAttributes.Normal);
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
 namespace DocumentManagement
 {
     public class DBconnection
@@ -52,6 +53,61 @@ namespace DocumentManagement
             connection.Close();
 
         }
+        public void saveHiddenFileName(string selectedFile)
+        {
+            try
+            {
+                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
+                var connection = new SQLiteConnection(connectionString);
+                //string valueToSave=extText.Text;
+                string query = "INSERT INTO hiddenfiles (filename) VALUES (@filename)";
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@filename", selectedFile);
+                command.ExecuteNonQuery();
+                connection.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+           
+
+        }
+        public void getHiddenFileNames(System.Windows.Controls.Primitives.Popup hidddenFilesPopup, System.Windows.Controls.ListBox hdFileList)
+        {
+            List<string> hiddenFiles = new List<string>();
+            try
+            {
+                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
+                var connection = new SQLiteConnection(connectionString);
+                //string valueToSave=extText.Text;
+                string query = "SELECT filename FROM hiddenfiles";
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+
+                        hiddenFiles.Add(reader.GetString(0));
+
+                    }
+                      hdFileList.ItemsSource= hiddenFiles;
+                    
+                   
+                }
+                connection.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
 
         public void readSavedFiles(System.Windows.Controls.ComboBox savedFilescb)
         {
@@ -84,14 +140,16 @@ namespace DocumentManagement
                 
               
         }
+
         public void BackUpFile(string savefile)
         {
+            
             try
             {
                 string savingTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 var filename = Path.GetFileName(savefile);
                 //var savefile = "C:\\Users\\Omistaja\\Desktop\\history3.txt";
-                var lines = File.ReadLines(savefile);
+                var lines = System.IO.File.ReadLines(savefile);
                 string textResult = "";
                 foreach (var line in lines)
                 {
