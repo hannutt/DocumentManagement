@@ -264,7 +264,7 @@ namespace DocumentManagement
 
         private void folderSearch_Click(object sender, RoutedEventArgs e)
         {
-            fs.searchFolders(dirList, fName.Text, lbFiles);
+            fs.searchFolders(dirList, fName.Text, lbFiles,tView,tvItem);
         }
 
         private void hdFileList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -281,6 +281,28 @@ namespace DocumentManagement
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        private void clearContent_Click(object sender, RoutedEventArgs e)
+        {
+            selectedItems.Content = "";
+        }
+
+        private void tViewCB_Checked(object sender, RoutedEventArgs e)
+        {
+            tView.Visibility = Visibility.Visible;
+            lbFiles.Visibility=Visibility.Hidden;
+        }
+
+        private void tViewCB_Unchecked(object sender, RoutedEventArgs e)
+        {
+            tView.Visibility = Visibility.Hidden;
+            lbFiles.Visibility = Visibility.Visible;
+        }
+
+        private void deleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            fs.deleteByExtension(directories.SelectedItem,options.SelectedItem);
         }
     }
 }

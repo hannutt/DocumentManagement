@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace DocumentManagement
@@ -13,7 +15,7 @@ namespace DocumentManagement
     public class FileSearch
     {
         public string[] fileList;
-        public void searchFolders(List<string> dirList, string fname, System.Windows.Controls.ListBox lbFiles)
+        public void searchFolders(List<string> dirList, string fname, System.Windows.Controls.ListBox lbFiles, System.Windows.Controls.TreeView tView, System.Windows.Controls.TreeViewItem tvItem)
         {
 
             for (int i = 0; i < dirList.Count; i++)
@@ -29,9 +31,9 @@ namespace DocumentManagement
             }
             foreach (string file in fileList)
             {
-               
-                lbFiles.Items.Add(file);
 
+                lbFiles.Items.Add(file);
+                tvItem.Items.Add(file);
             }
 
 
@@ -57,11 +59,30 @@ namespace DocumentManagement
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.Forms.MessageBox.Show(ex.Message);
             }
 
         }
+        public void deleteByExtension(object path, object fileExtension)
+        {
+            try
+            {
+                fileList = Directory.GetFiles((string)path, (string)fileExtension, SearchOption.TopDirectoryOnly);
+                foreach (var file in fileList)
+                {
+                    File.Delete(file);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex.Message);
+            }
+        }
     }
+
+
 
 
 }

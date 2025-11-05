@@ -23,7 +23,7 @@
         <Button x:Name="searchFileBtn" Content="Search" HorizontalAlignment="Left" Margin="135,284,0,0" VerticalAlignment="Top" Click="searchFileBtn_Click" Visibility="Hidden"/>
         <CheckBox x:Name="partialSearch" Content="Partial search&#x9;" HorizontalAlignment="Left" Margin="10,256,0,0" VerticalAlignment="Top" Unchecked="partialSearch_Unchecked" Checked="partialSearch_Checked"/>
         <CheckBox x:Name="searchCdrive" Content="Search from c:\&#x9;" HorizontalAlignment="Left" Margin="119,256,0,0" VerticalAlignment="Top" Checked="searchCdrive_Checked"/>
-        <Label x:Name="selectedItems" Content="" HorizontalAlignment="Left" Margin="420,21,0,0" VerticalAlignment="Top" Width="135"/>
+        <Label x:Name="selectedItems"  Content="" HorizontalAlignment="Left" Margin="420,21,0,0" VerticalAlignment="Top" Width="135"/>
         <TextBox x:Name="backupInput" HorizontalAlignment="Left" Margin="6,380,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="backupBtn" Content="Backup" HorizontalAlignment="Left" Margin="7,404,0,0" VerticalAlignment="Top" Click="backupBtn_Click" RenderTransformOrigin="0.472,0.829"/>
         <Button x:Name="readBackup" Content="Read" HorizontalAlignment="Left" Margin="68,404,0,0" VerticalAlignment="Top" Click="readBackup_Click"/>
@@ -39,6 +39,12 @@
             <ListBox x:Name="hdFileList" Width="200" Height="200" MouseDoubleClick="hdFileList_MouseDoubleClick"></ListBox>
             </StackPanel>
             </Popup>
+        <Button Content="X" x:Name="clearContent" HorizontalAlignment="Left" Margin="572,34,0,0" VerticalAlignment="Top" Click="clearContent_Click"/>
+        <TreeView Margin="408,90,63,20" x:Name="tView" Visibility="Hidden" >
+            <TreeViewItem x:Name="tvItem" Header=""/>
+        </TreeView>
+        <CheckBox x:Name="tViewCB" Content="Use treeview" HorizontalAlignment="Left" Margin="155,39,0,0" VerticalAlignment="Top" Checked="tViewCB_Checked" Unchecked="tViewCB_Unchecked"/>
+        <Button x:Name="deleteBtn" Content="Delete" HorizontalAlignment="Left" Margin="6,329,0,0" VerticalAlignment="Top" Click="deleteBtn_Click"/>
 
     </Grid>
 </Window>

@@ -42,3 +42,8 @@ CTRL+U Unhides a selected file.
 HIDING AND SHOWING FILES
 
 The user can hide and unhide the retrieved files with a mouse click. The file path and name of each hidden file are stored in an SQLite database so that the user can track hidden files and unhide them when needed. Hiding and showing files are done using the SetAttribute and FileAttribute methods of the C# Files class.
+
+DELETE FILES BY FILE EXTENSION
+
+The user can delete files by file extension. In the application user interface, the user can select the folder from which the deletion will be performed and the file extensions to be considered for deletion from a combo menu. For example, selecting the .txt and .bmp extensions will delete only the .txt and .bmp files from the selected folder.
+
