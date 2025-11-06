@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,7 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Microsoft.VisualBasic.FileIO;
+using SearchOption = System.IO.SearchOption;
 namespace DocumentManagement
 {
     /// <summary>
@@ -31,6 +33,7 @@ namespace DocumentManagement
         public bool topDirs = false;
         public bool Csearch = false;
         public bool mdata = false;
+        public bool moveToRecycleBin=false;
         public string[] fileExtensionList;
         public MainWindow()
         {
@@ -104,9 +107,17 @@ namespace DocumentManagement
             {
                 var selectedFile = (string)lbFiles.SelectedItem;
                 MessageBoxResult result = MessageBox.Show("Do you want to delete this file?", selectedFile.ToString() + "Confirmation", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes)
+                if (result == MessageBoxResult.Yes && moveToRecycleBin==true)
                 {
-                    File.Delete(selectedFile);
+                    FileSystem.DeleteFile(selectedFile,
+                         Microsoft.VisualBasic.FileIO.UIOption.AllDialogs,
+                         Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin,
+                         Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException);
+                  
+                }
+                else if (result==MessageBoxResult.Yes && moveToRecycleBin==false)
+                {
+                    FileSystem.DeleteFile(selectedFile);
                 }
                 else
                 {
@@ -302,7 +313,17 @@ namespace DocumentManagement
 
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            fs.deleteByExtension(directories.SelectedItem,options.SelectedItem);
+            fs.deleteByExtension(directories.SelectedItem,options.SelectedItem,topDirs);
+        }
+
+        private void recyclebinCB_Checked(object sender, RoutedEventArgs e)
+        {
+            moveToRecycleBin = true;
+        }
+
+        private void recyclebinCB_Unchecked(object sender, RoutedEventArgs e)
+        {
+            moveToRecycleBin= false;
         }
     }
 }

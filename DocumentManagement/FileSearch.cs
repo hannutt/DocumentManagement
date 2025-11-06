@@ -63,11 +63,22 @@ namespace DocumentManagement
             }
 
         }
-        public void deleteByExtension(object path, object fileExtension)
+        public void deleteByExtension(object path, object fileExtension, bool topDirs)
         {
             try
             {
-                fileList = Directory.GetFiles((string)path, (string)fileExtension, SearchOption.TopDirectoryOnly);
+                if (topDirs)
+                {
+                    fileList = Directory.GetFiles((string)path, (string)fileExtension, SearchOption.TopDirectoryOnly);
+
+                }
+                else
+                {
+                    fileList = Directory.GetFiles((string)path, (string)fileExtension, SearchOption.AllDirectories);
+
+
+                }
+
                 foreach (var file in fileList)
                 {
                     File.Delete(file);

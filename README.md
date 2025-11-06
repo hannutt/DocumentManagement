@@ -43,7 +43,13 @@ HIDING AND SHOWING FILES
 
 The user can hide and unhide the retrieved files with a mouse click. The file path and name of each hidden file are stored in an SQLite database so that the user can track hidden files and unhide them when needed. Hiding and showing files are done using the SetAttribute and FileAttribute methods of the C# Files class.
 
+DELETING FILES
+
+The user can delete files in several ways. Once the folders and files are listed in the ListBox, the user can right-click the file they want to delete. After clicking, the application displays a MessageBox that asks the user to confirm or cancel the deletion. If the deletion is confirmed, the application deletes the selected file using the FileSystem.DeleteFile method.
+
+Before deleting, the user can click the CheckBox to choose whether to permanently delete the file or just move it to the Recycle Bin. This feature is implemented using the Microsoft.VisualBasic.FileIO.RecycleOption method.
+
 DELETE FILES BY FILE EXTENSION
 
-The user can delete files by file extension. In the application user interface, the user can select the folder from which the deletion will be performed and the file extensions to be considered for deletion from a combo menu. For example, selecting the .txt and .bmp extensions will delete only the .txt and .bmp files from the selected folder.
+The user can delete files by file extension. In the application user interface, the user can select the folder from which the deletion will be performed and the file extensions to be considered for deletion from a combo menu. For example, selecting the .txt and .bmp extensions will delete only the .txt and .bmp files from the selected folder. The user can use the checkbox to choose whether to search for files with the file extension to be deleted only in the main folders or also in subfolders.
 
