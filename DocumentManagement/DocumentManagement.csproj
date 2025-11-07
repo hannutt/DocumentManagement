@@ -77,6 +77,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="imageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -87,6 +91,9 @@
     </Compile>
     <Compile Include="DBconnection.cs" />
     <Compile Include="FileSearch.cs" />
+    <Compile Include="imageWindow.xaml.cs">
+      <DependentUpon>imageWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="KeyboardCombinations.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

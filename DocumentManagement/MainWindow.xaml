@@ -36,6 +36,7 @@
         <Popup x:Name="hidddenFilesPopup" HorizontalAlignment="Center" VerticalAlignment="Top" Width="400" Height="400" IsOpen="False">
             <StackPanel Background="Gray">
             <Label Content="HIDDEN FILES"></Label>
+                <Button x:Name="closePopup" Click="closePopup_Click">X</Button>
             <ListBox x:Name="hdFileList" Width="200" Height="200" MouseDoubleClick="hdFileList_MouseDoubleClick"></ListBox>
             </StackPanel>
             </Popup>

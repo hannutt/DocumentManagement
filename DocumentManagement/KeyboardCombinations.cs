@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace DocumentManagement
 {
     public class KeyboardCombinations
     {
-     
+
         DBconnection conn = new DBconnection();
         public void copyFile(string selectedFile)
         {
@@ -35,7 +36,7 @@ namespace DocumentManagement
             {
                 MessageBox.Show(ex.Message);
             }
-          
+
         }
         public void hideFile(string selectedFile)
         {
@@ -44,19 +45,30 @@ namespace DocumentManagement
                 File.SetAttributes(selectedFile, FileAttributes.Hidden);
                 conn.saveHiddenFileName(selectedFile);
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-           
+
 
         }
         public void unHideFile(Popup hidddenFilesPopup, System.Windows.Controls.ListBox hdFileList)
         {
             hidddenFilesPopup.IsOpen = true;
-            conn.getHiddenFileNames(hidddenFilesPopup,hdFileList);
-            
+            conn.getHiddenFileNames(hidddenFilesPopup, hdFileList);
+
+        }
+        //avaa valitun kuvatiedoston erillisessä wpf-ikkunnassa
+        public void imagePreview(string selectedFile)
+        {
+            imageWindow iw = new imageWindow();
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(selectedFile);
+            bitmap.EndInit();
+            iw.ImgView.Source = bitmap;
+            iw.Show();
         }
     }
-
 }

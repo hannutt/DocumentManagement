@@ -33,7 +33,7 @@ namespace DocumentManagement
         public bool topDirs = false;
         public bool Csearch = false;
         public bool mdata = false;
-        public bool moveToRecycleBin=false;
+        public bool moveToRecycleBin = false;
         public string[] fileExtensionList;
         public MainWindow()
         {
@@ -107,15 +107,15 @@ namespace DocumentManagement
             {
                 var selectedFile = (string)lbFiles.SelectedItem;
                 MessageBoxResult result = MessageBox.Show("Do you want to delete this file?", selectedFile.ToString() + "Confirmation", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes && moveToRecycleBin==true)
+                if (result == MessageBoxResult.Yes && moveToRecycleBin == true)
                 {
                     FileSystem.DeleteFile(selectedFile,
                          Microsoft.VisualBasic.FileIO.UIOption.AllDialogs,
                          Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin,
                          Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException);
-                  
+
                 }
-                else if (result==MessageBoxResult.Yes && moveToRecycleBin==false)
+                else if (result == MessageBoxResult.Yes && moveToRecycleBin == false)
                 {
                     FileSystem.DeleteFile(selectedFile);
                 }
@@ -250,6 +250,7 @@ namespace DocumentManagement
             combinations.Add(Key.K, () => kb.copyFile(selectedFile));
             combinations.Add(Key.H, () => kb.hideFile(selectedFile));
             combinations.Add(Key.U, () => kb.unHideFile(hidddenFilesPopup, hdFileList));
+            combinations.Add(Key.I, ()=>kb.imagePreview(selectedFile));
             //käydään dict foreachissa läpi
             foreach (var item in combinations)
             {
@@ -275,17 +276,17 @@ namespace DocumentManagement
 
         private void folderSearch_Click(object sender, RoutedEventArgs e)
         {
-            fs.searchFolders(dirList, fName.Text, lbFiles,tView,tvItem);
+            fs.searchFolders(dirList, fName.Text, lbFiles, tView, tvItem);
         }
 
+        //muuttaa piilotetun tiedoston näkyväksi
         private void hdFileList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             string fileName = (String)hdFileList.SelectedItem;
             try
             {
                 File.SetAttributes(fileName, FileAttributes.Normal);
-
-
+                conn.removeHiddeFileFromDb(fileName);
             }
             catch (Exception ex)
             {
@@ -302,7 +303,7 @@ namespace DocumentManagement
         private void tViewCB_Checked(object sender, RoutedEventArgs e)
         {
             tView.Visibility = Visibility.Visible;
-            lbFiles.Visibility=Visibility.Hidden;
+            lbFiles.Visibility = Visibility.Hidden;
         }
 
         private void tViewCB_Unchecked(object sender, RoutedEventArgs e)
@@ -313,7 +314,7 @@ namespace DocumentManagement
 
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            fs.deleteByExtension(directories.SelectedItem,options.SelectedItem,topDirs);
+            fs.deleteByExtension(directories.SelectedItem, options.SelectedItem, topDirs);
         }
 
         private void recyclebinCB_Checked(object sender, RoutedEventArgs e)
@@ -323,7 +324,13 @@ namespace DocumentManagement
 
         private void recyclebinCB_Unchecked(object sender, RoutedEventArgs e)
         {
-            moveToRecycleBin= false;
+            moveToRecycleBin = false;
+        }
+
+        private void closePopup_Click(object sender, RoutedEventArgs e)
+        {
+            hidddenFilesPopup.IsOpen = false;
+
         }
     }
 }

@@ -36,12 +36,13 @@ The keyboard shortcuts are: CTRL+K. This combination is for copying files. When 
 
 The user can choose where to copy the selected file by selecting the folder and clicking the OK button. Finally, the copying of files is done using the Copy method of the File class.
 
-CTRL+H Hides the selected file.
-CTRL+U Unhides a selected file.
+CTRL+H = Hides the selected file.
+CTRL+U = Unhides a selected file.
+CTRL+I = Opens the selected image file in a separate C# WPF window.
 
 HIDING AND SHOWING FILES
 
-The user can hide and unhide the retrieved files with a mouse click. The file path and name of each hidden file are stored in an SQLite database so that the user can track hidden files and unhide them when needed. Hiding and showing files are done using the SetAttribute and FileAttribute methods of the C# Files class.
+The user can hide and unhide the retrieved files with a mouse click. The file path and name of each hidden file are stored in an SQLite database so that the user can track hidden files and unhide them when needed. If an originally hidden file is restored to visible, the program removes the file path from the SQLite database. Hiding and showing files are done using the SetAttribute and FileAttribute methods of the C# Files class.
 
 DELETING FILES
 

@@ -108,6 +108,28 @@ namespace DocumentManagement
             }
 
         }
+        
+        public void removeHiddeFileFromDb(string fileName)
+        {
+            try
+            {
+                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
+                var connection = new SQLiteConnection(connectionString);
+                //string valueToSave=extText.Text;
+                string query = $"DELETE FROM hiddenfiles WHERE filename='{fileName}'";
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+
+        }
 
         public void readSavedFiles(System.Windows.Controls.ComboBox savedFilescb)
         {
