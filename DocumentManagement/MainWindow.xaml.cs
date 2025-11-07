@@ -244,6 +244,7 @@ namespace DocumentManagement
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             var selectedFile = (string)lbFiles.SelectedItem;
+            var multipleSelect = lbFiles.SelectedItems;
             Dictionary<Key, Action> combinations = new Dictionary<Key, Action>();
             //lisätään sanakitjaan näppäin ja sitä vastaava metodi, eli K arvo on copyfile jne
             //()=> avulla asetetaan parametri
@@ -251,6 +252,7 @@ namespace DocumentManagement
             combinations.Add(Key.H, () => kb.hideFile(selectedFile));
             combinations.Add(Key.U, () => kb.unHideFile(hidddenFilesPopup, hdFileList));
             combinations.Add(Key.I, ()=>kb.imagePreview(selectedFile));
+            combinations.Add(Key.Z, () => kb.MultipleSelectedFiles(mu));
             //käydään dict foreachissa läpi
             foreach (var item in combinations)
             {

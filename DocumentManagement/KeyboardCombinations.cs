@@ -70,5 +70,16 @@ namespace DocumentManagement
             iw.ImgView.Source = bitmap;
             iw.Show();
         }
+
+        public void MultipleSelectedFiles(System.Collections.IList multipleSelect)
+        {
+            foreach (var item in multipleSelect)
+            {
+                Trace.WriteLine(item);
+
+            }
+
+
+        }
     }
 }

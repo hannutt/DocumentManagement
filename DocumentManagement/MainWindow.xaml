@@ -10,7 +10,7 @@
         <ComboBox x:Name="options" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="options_SelectionChanged">
 
         </ComboBox>
-        <ListBox x:Name="lbFiles" Margin="375,75,30,90" MouseDoubleClick="lbFiles_MouseDoubleClick" MouseRightButtonDown="lbFiles_MouseRightButtonDown" MouseRightButtonUp="lbFiles_MouseRightButtonUp" Background="#FFB9C4C3"/>
+        <ListBox x:Name="lbFiles" SelectionMode="Multiple" Margin="375,75,30,90" MouseDoubleClick="lbFiles_MouseDoubleClick" MouseRightButtonDown="lbFiles_MouseRightButtonDown" MouseRightButtonUp="lbFiles_MouseRightButtonUp" Background="#FFB9C4C3"/>
         <ComboBox x:Name="directories" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="directories_SelectionChanged"/>
         <CheckBox x:Name="mainDirs" Content="Top dirs only" HorizontalAlignment="Left" Margin="154,9,0,0" VerticalAlignment="Top" Checked="mainDirs_Checked" Unchecked="mainDirs_Unchecked"/>
         <TextBox x:Name="fileExtensions" HorizontalAlignment="Left" Margin="10,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.1,-1"/>
@@ -23,7 +23,7 @@
         <Button x:Name="searchFileBtn" Content="Search" HorizontalAlignment="Left" Margin="135,284,0,0" VerticalAlignment="Top" Click="searchFileBtn_Click" Visibility="Hidden"/>
         <CheckBox x:Name="partialSearch" Content="Partial search&#x9;" HorizontalAlignment="Left" Margin="10,256,0,0" VerticalAlignment="Top" Unchecked="partialSearch_Unchecked" Checked="partialSearch_Checked"/>
         <CheckBox x:Name="searchCdrive" Content="Search from c:\&#x9;" HorizontalAlignment="Left" Margin="119,256,0,0" VerticalAlignment="Top" Checked="searchCdrive_Checked"/>
-        <Label x:Name="selectedItems"  Content="" HorizontalAlignment="Left" Margin="420,21,0,0" VerticalAlignment="Top" Width="135"/>
+        <Label x:Name="selectedItems"  Content="" HorizontalAlignment="Left" Margin="505,31,0,0" VerticalAlignment="Top" Width="135"/>
         <TextBox x:Name="backupInput" HorizontalAlignment="Left" Margin="6,380,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="backupBtn" Content="Backup" HorizontalAlignment="Left" Margin="7,404,0,0" VerticalAlignment="Top" Click="backupBtn_Click" RenderTransformOrigin="0.472,0.829"/>
         <Button x:Name="readBackup" Content="Read" HorizontalAlignment="Left" Margin="68,404,0,0" VerticalAlignment="Top" Click="readBackup_Click"/>
@@ -35,18 +35,19 @@
         <Label x:Name="searchLbl" Content="SEARCH OPTIONS   " HorizontalAlignment="Left" Margin="10,222,0,0" VerticalAlignment="Top"/>
         <Popup x:Name="hidddenFilesPopup" HorizontalAlignment="Center" VerticalAlignment="Top" Width="400" Height="400" IsOpen="False">
             <StackPanel Background="Gray">
-            <Label Content="HIDDEN FILES"></Label>
+                <Label Content="HIDDEN FILES"></Label>
                 <Button x:Name="closePopup" Click="closePopup_Click">X</Button>
-            <ListBox x:Name="hdFileList" Width="200" Height="200" MouseDoubleClick="hdFileList_MouseDoubleClick"></ListBox>
+                <ListBox x:Name="hdFileList" Width="200" Height="200" MouseDoubleClick="hdFileList_MouseDoubleClick"></ListBox>
             </StackPanel>
-            </Popup>
-        <Button Content="X" x:Name="clearContent" HorizontalAlignment="Left" Margin="572,34,0,0" VerticalAlignment="Top" Click="clearContent_Click"/>
+        </Popup>
+        <Button Content="X" x:Name="clearContent" HorizontalAlignment="Left" Margin="652,34,0,0" VerticalAlignment="Top" Click="clearContent_Click"/>
         <TreeView Margin="408,90,63,20" x:Name="tView" Visibility="Hidden" >
             <TreeViewItem x:Name="tvItem" Header=""/>
         </TreeView>
         <CheckBox x:Name="tViewCB" Content="Use treeview" HorizontalAlignment="Left" Margin="155,39,0,0" VerticalAlignment="Top" Checked="tViewCB_Checked" Unchecked="tViewCB_Unchecked"/>
         <Button x:Name="deleteBtn" Content="Delete" HorizontalAlignment="Left" Margin="6,329,0,0" VerticalAlignment="Top" Click="deleteBtn_Click"/>
         <CheckBox x:Name="recyclebinCB" Content="Recycle Bin" HorizontalAlignment="Left" Margin="155,67,0,0" VerticalAlignment="Top" Checked="recyclebinCB_Checked" Unchecked="recyclebinCB_Unchecked"/>
+        <CheckBox x:Name="multiSelect" Content="Enable Multiple Select" HorizontalAlignment="Left" Margin="400,32,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked"/>
 
     </Grid>
 </Window>
