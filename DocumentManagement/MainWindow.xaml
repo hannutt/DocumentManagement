@@ -33,11 +33,11 @@
         <Button x:Name="folderSearch" Content="Search folders" HorizontalAlignment="Left" Margin="75,303,0,0" VerticalAlignment="Top" Click="folderSearch_Click"/>
         <TextBox x:Name="fName" HorizontalAlignment="Left" Margin="177,305,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="searchLbl" Content="SEARCH OPTIONS   " HorizontalAlignment="Left" Margin="10,222,0,0" VerticalAlignment="Top"/>
-        <Popup x:Name="hidddenFilesPopup" HorizontalAlignment="Center" VerticalAlignment="Top" Width="400" Height="400" IsOpen="False">
+        <Popup x:Name="hidddenFilesPopup" HorizontalAlignment="Center" VerticalAlignment="Top" Placement="Center" Width="300" Height="300" IsOpen="False">
             <StackPanel Background="Gray">
                 <Label Content="HIDDEN FILES"></Label>
                 <Button x:Name="closePopup" Click="closePopup_Click">X</Button>
-                <ListBox x:Name="hdFileList" Width="200" Height="200" MouseDoubleClick="hdFileList_MouseDoubleClick"></ListBox>
+                <ListBox x:Name="hdFileList" Width="250" Height="250" MouseDoubleClick="hdFileList_MouseDoubleClick" MouseRightButtonUp="hdFileList_MouseRightButtonUp" ></ListBox>
             </StackPanel>
         </Popup>
         <Button Content="X" x:Name="clearContent" HorizontalAlignment="Left" Margin="652,34,0,0" VerticalAlignment="Top" Click="clearContent_Click"/>

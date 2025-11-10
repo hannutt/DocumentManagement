@@ -255,6 +255,7 @@ namespace DocumentManagement
             combinations.Add(Key.I, () => kb.imagePreview(selectedFile));
             combinations.Add(Key.Z, () => kb.zipMultipleSelectedFiles(multipleSelect));
             combinations.Add(Key.B, () => kb.UnzipFiles(selectedFile));
+            combinations.Add(Key.R, () => kb.restoreFileFromRecycleBin(hidddenFilesPopup, hdFileList));
             //käydään dict foreachissa läpi
             foreach (var item in combinations)
             {
@@ -298,6 +299,17 @@ namespace DocumentManagement
             }
 
         }
+        private void hdFileList_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            string fileName = (String)hdFileList.SelectedItem;
+            var recycleBin = "C:\\$Recycle.Bin";
+            try
+            {
+                recycleBin.Restore()
+
+            }
+
+        }
 
         private void clearContent_Click(object sender, RoutedEventArgs e)
         {
@@ -336,5 +348,7 @@ namespace DocumentManagement
             hidddenFilesPopup.IsOpen = false;
 
         }
+
+      
     }
 }

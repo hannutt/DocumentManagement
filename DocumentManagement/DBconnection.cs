@@ -249,6 +249,38 @@ namespace DocumentManagement
 
             }
         }
+        public void getDeletedFiles(System.Windows.Controls.Primitives.Popup hidddenFilesPopup, System.Windows.Controls.ListBox hdFileList)
+        {
+            List<string> deletedFiles = new List<string>();
+            try
+            {
+
+                var connection = new SQLiteConnection(connStr());
+                //string valueToSave=extText.Text;
+                string query = "SELECT filename FROM deletedfiles";
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+
+                        deletedFiles.Add(reader.GetString(0));
+
+                    }
+                    hdFileList.ItemsSource = deletedFiles;
+
+
+                }
+                connection.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
     }
 

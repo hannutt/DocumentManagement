@@ -62,6 +62,13 @@ namespace DocumentManagement
             conn.getHiddenFileNames(hidddenFilesPopup, hdFileList);
 
         }
+
+        public void restoreFileFromRecycleBin(Popup hidddenFilesPopup, System.Windows.Controls.ListBox hdFileList)
+        {
+            hidddenFilesPopup.IsOpen = true;
+            conn.getDeletedFiles(hidddenFilesPopup, hdFileList);
+
+        }
         //avaa valitun kuvatiedoston erillisessä wpf-ikkunnassa
         public void imagePreview(string selectedFile)
         {
