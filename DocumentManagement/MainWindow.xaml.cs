@@ -113,6 +113,7 @@ namespace DocumentManagement
                          Microsoft.VisualBasic.FileIO.UIOption.AllDialogs,
                          Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin,
                          Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException);
+                    conn.trackDeletedFiles(selectedFile);
 
                 }
                 else if (result == MessageBoxResult.Yes && moveToRecycleBin == false)
@@ -251,8 +252,9 @@ namespace DocumentManagement
             combinations.Add(Key.K, () => kb.copyFile(selectedFile));
             combinations.Add(Key.H, () => kb.hideFile(selectedFile));
             combinations.Add(Key.U, () => kb.unHideFile(hidddenFilesPopup, hdFileList));
-            combinations.Add(Key.I, ()=>kb.imagePreview(selectedFile));
-            combinations.Add(Key.Z, () => kb.MultipleSelectedFiles(multipleSelect));
+            combinations.Add(Key.I, () => kb.imagePreview(selectedFile));
+            combinations.Add(Key.Z, () => kb.zipMultipleSelectedFiles(multipleSelect));
+            combinations.Add(Key.B, () => kb.UnzipFiles(selectedFile));
             //käydään dict foreachissa läpi
             foreach (var item in combinations)
             {

@@ -74,22 +74,28 @@ namespace DocumentManagement
             iw.Show();
         }
 
-        public void MultipleSelectedFiles(System.Collections.IList multipleSelect)
+        public static string showDialogies()
+        {
+            var fbd = new FolderBrowserDialog();
+            fbd.ShowDialog();
+            var selectedPath = fbd.SelectedPath;
+            return selectedPath;
+        }
+        public void zipMultipleSelectedFiles(System.Collections.IList multipleSelect)
         {
             try
             {
-                var fbd = new FolderBrowserDialog();
-                fbd.ShowDialog();
-                var selectedPath = fbd.SelectedPath;
+                var zipPath=showDialogies();
                 var archive = new Archive();
                 var filename = "";
+                string currentTime = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
                 foreach (var item in multipleSelect)
                 {
                     //haetaan polusta pelkkä tiedostonimi
                     filename=Path.GetFileName(item.ToString());
                     //parametreina tiedostonimi + koko tiedostopolku
                     archive.CreateEntry(filename, item.ToString());
-                    archive.Save($"{selectedPath}\\result.zip");
+                    archive.Save($"{zipPath}\\result{currentTime}.zip");
 
                 }
                 
@@ -99,8 +105,23 @@ namespace DocumentManagement
             {
                 MessageBox.Show(ex.Message);
             }
-         
+        }
+        public void UnzipFiles(string selectedFile)
+        {
+            try
+            {
+                var unZipPath = showDialogies();
+                var archive = new Archive(selectedFile);
+                archive.ExtractToDirectory(unZipPath);
+                MessageBox.Show("ZIP package decompressed.");
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+         
 
         }
     }

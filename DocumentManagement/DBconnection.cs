@@ -17,12 +17,18 @@ namespace DocumentManagement
     public class DBconnection
     {
 
+        public static String connStr()
+        {
+            string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
+            return connectionString;
+        }
+
         public void fetchSqlData(System.Windows.Controls.ComboBox options)
         {
             List<String> sqlData = new List<String>();
 
-            string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
-            var connection = new SQLiteConnection(connectionString);
+            //string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
+            var connection = new SQLiteConnection(connStr());
             // Open the connection
             connection.Open();
             string query = "SELECT * FROM filetypes";
@@ -41,9 +47,7 @@ namespace DocumentManagement
         public void saveValues(System.Windows.Controls.TextBox extText)
         {
 
-
-            string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
-            var connection = new SQLiteConnection(connectionString);
+            var connection = new SQLiteConnection(connStr());
             //string valueToSave=extText.Text;
             string query = "INSERT INTO filetypes (filetype) VALUES (@filetype)";
             connection.Open();
@@ -57,8 +61,8 @@ namespace DocumentManagement
         {
             try
             {
-                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
-                var connection = new SQLiteConnection(connectionString);
+
+                var connection = new SQLiteConnection(connStr());
                 //string valueToSave=extText.Text;
                 string query = "INSERT INTO hiddenfiles (filename) VALUES (@filename)";
                 connection.Open();
@@ -72,7 +76,7 @@ namespace DocumentManagement
             {
                 MessageBox.Show(ex.Message);
             }
-           
+
 
         }
         public void getHiddenFileNames(System.Windows.Controls.Primitives.Popup hidddenFilesPopup, System.Windows.Controls.ListBox hdFileList)
@@ -80,8 +84,8 @@ namespace DocumentManagement
             List<string> hiddenFiles = new List<string>();
             try
             {
-                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
-                var connection = new SQLiteConnection(connectionString);
+
+                var connection = new SQLiteConnection(connStr());
                 //string valueToSave=extText.Text;
                 string query = "SELECT filename FROM hiddenfiles";
                 connection.Open();
@@ -95,9 +99,9 @@ namespace DocumentManagement
                         hiddenFiles.Add(reader.GetString(0));
 
                     }
-                      hdFileList.ItemsSource= hiddenFiles;
-                    
-                   
+                    hdFileList.ItemsSource = hiddenFiles;
+
+
                 }
                 connection.Close();
 
@@ -108,13 +112,13 @@ namespace DocumentManagement
             }
 
         }
-        
+
         public void removeHiddeFileFromDb(string fileName)
         {
             try
             {
-                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
-                var connection = new SQLiteConnection(connectionString);
+
+                var connection = new SQLiteConnection(connStr());
                 //string valueToSave=extText.Text;
                 string query = $"DELETE FROM hiddenfiles WHERE filename='{fileName}'";
                 connection.Open();
@@ -136,8 +140,8 @@ namespace DocumentManagement
             try
             {
                 List<String> Files = new List<string>();
-                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
-                var connection = new SQLiteConnection(connectionString);
+
+                var connection = new SQLiteConnection(connStr());
                 //string valueToSave=extText.Text;
                 string query = "SELECT filename FROM backups";
                 connection.Open();
@@ -155,17 +159,18 @@ namespace DocumentManagement
                     connection.Close();
                 }
                 connection.Close();
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-                
-              
+
+
         }
 
         public void BackUpFile(string savefile)
         {
-            
+
             try
             {
                 string savingTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -178,8 +183,8 @@ namespace DocumentManagement
                     textResult += line;
                 }
 
-                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
-                var connection = new SQLiteConnection(connectionString);
+
+                var connection = new SQLiteConnection(connStr());
                 //string valueToSave=extText.Text;
                 string query = "INSERT INTO backups (filename,content,savetime) VALUES (@filename,@content,@savetime)";
                 connection.Open();
@@ -201,8 +206,8 @@ namespace DocumentManagement
         {
             try
             {
-                string connectionString = "Data Source=\"C:\\Codes\\c#\\DocumentManagement\\DocumentManagement\\documentDB.db\"";
-                var connection = new SQLiteConnection(connectionString);
+
+                var connection = new SQLiteConnection(connStr());
                 // Open the connection
                 connection.Open();
                 string query = $"SELECT content FROM backups WHERE filename='{fname}'";
@@ -218,19 +223,36 @@ namespace DocumentManagement
                 }
                 lbFiles.Items.Add(data);
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-        
-
-
         }
+        public void trackDeletedFiles(string selectedFile)
+        {
+            try
+            {
+                var connection = new SQLiteConnection(connStr());
+                //string valueToSave=extText.Text;
+                string query = "INSERT INTO deletedfiles (filename) VALUES (@filename)";
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@filename",selectedFile);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex.Message);
+
+
+            }
+        }
+
     }
 
-
-
-}
+    }
 
 
 

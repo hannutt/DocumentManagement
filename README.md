@@ -36,10 +36,11 @@ The keyboard shortcuts are: CTRL+K. This combination is for copying files. When 
 
 The user can choose where to copy the selected file by selecting the folder and clicking the OK button. Finally, the copying of files is done using the Copy method of the File class.
 
-CTRL+H = Hides the selected file.
-CTRL+U = Unhides a selected file.
-CTRL+I = Opens the selected image file in a separate C# WPF window.
-CTRL+Z = Compress selected files into a ZIP package
+CTRL+H = Hides the selected file.\
+CTRL+U = Unhides a selected file.\
+CTRL+I = Opens the selected image file in a separate C# WPF window.\
+CTRL+Z = Compress selected files into a ZIP package\
+CTRL+B = Extract the selected zip archive\
 
 ARCHIVING FILES
 
@@ -48,6 +49,10 @@ The user can select the desired files from the ListBox and create a ZIP package 
 
 After pressing the hotkey, the application uses the C# FileBrowserDialog class to open the device's folder structure in graphical mode. The user can choose where to save the completed ZIP package.
 Once the selection is made, the selected files are iterated through in a foreach loop and saved to a Zip package using the Aspose.Zip Save method.
+
+EXTRACT SELECTED ARCHIVE
+
+The user can search for zip files and display them in a ListBox element. The desired ZIP archive can be extracted by selecting it with the mouse and pressing the CTRL+B hotkey combination. After pressing the hotkey, the process is the same as when compressing a file, but instead of the Aspose.Zip save method, the application uses the ExtractToDirectory method to extract the files to the selected directory.
 
 HIDING AND SHOWING FILES
 
