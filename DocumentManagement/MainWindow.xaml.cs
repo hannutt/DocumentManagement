@@ -252,7 +252,7 @@ namespace DocumentManagement
             combinations.Add(Key.H, () => kb.hideFile(selectedFile));
             combinations.Add(Key.U, () => kb.unHideFile(hidddenFilesPopup, hdFileList));
             combinations.Add(Key.I, ()=>kb.imagePreview(selectedFile));
-            combinations.Add(Key.Z, () => kb.MultipleSelectedFiles(mu));
+            combinations.Add(Key.Z, () => kb.MultipleSelectedFiles(multipleSelect));
             //käydään dict foreachissa läpi
             foreach (var item in combinations)
             {

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using Aspose.Zip;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace DocumentManagement
 {
@@ -73,11 +76,30 @@ namespace DocumentManagement
 
         public void MultipleSelectedFiles(System.Collections.IList multipleSelect)
         {
-            foreach (var item in multipleSelect)
+            try
             {
-                Trace.WriteLine(item);
+                var fbd = new FolderBrowserDialog();
+                fbd.ShowDialog();
+                var selectedPath = fbd.SelectedPath;
+                var archive = new Archive();
+                var filename = "";
+                foreach (var item in multipleSelect)
+                {
+                    //haetaan polusta pelkkä tiedostonimi
+                    filename=Path.GetFileName(item.ToString());
+                    //parametreina tiedostonimi + koko tiedostopolku
+                    archive.CreateEntry(filename, item.ToString());
+                    archive.Save($"{selectedPath}\\result.zip");
 
+                }
+                
+                MessageBox.Show("ZIP archive is ready.");
+
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
+         
 
 
         }

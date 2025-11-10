@@ -39,6 +39,15 @@ The user can choose where to copy the selected file by selecting the folder and 
 CTRL+H = Hides the selected file.
 CTRL+U = Unhides a selected file.
 CTRL+I = Opens the selected image file in a separate C# WPF window.
+CTRL+Z = Compress selected files into a ZIP package
+
+ARCHIVING FILES
+
+The application uses the Aspose.Zip library to create packages.
+The user can select the desired files from the ListBox and create a ZIP package from them. The ListBox element supports multiple file selection, so the user can select the desired files at once and after selection use the CTRL+Z shortcut key combination to create a ZIP package.
+
+After pressing the hotkey, the application uses the C# FileBrowserDialog class to open the device's folder structure in graphical mode. The user can choose where to save the completed ZIP package.
+Once the selection is made, the selected files are iterated through in a foreach loop and saved to a Zip package using the Aspose.Zip Save method.
 
 HIDING AND SHOWING FILES
 
