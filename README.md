@@ -36,11 +36,12 @@ The keyboard shortcuts are: CTRL+K. This combination is for copying files. When 
 
 The user can choose where to copy the selected file by selecting the folder and clicking the OK button. Finally, the copying of files is done using the Copy method of the File class.
 
-CTRL+H = Hides the selected file.\
-CTRL+U = Unhides a selected file.\
-CTRL+I = Opens the selected image file in a separate C# WPF window.\
-CTRL+Z = Compress selected files into a ZIP package\
-CTRL+B = Extract the selected zip archive\
+CTRL+H = Hides the selected file.  
+CTRL+U = Unhides a selected file.  
+CTRL+I = Opens the selected image file in a separate C# WPF window.  
+CTRL+Z = Compress selected files into a ZIP package  
+CTRL+B = Extract the selected zip archive  
+CTRL+R = Restore selected file from Recycle Bin.
 
 ARCHIVING FILES
 
@@ -68,3 +69,6 @@ DELETE FILES BY FILE EXTENSION
 
 The user can delete files by file extension. In the application user interface, the user can select the folder from which the deletion will be performed and the file extensions to be considered for deletion from a combo menu. For example, selecting the .txt and .bmp extensions will delete only the .txt and .bmp files from the selected folder. The user can use the checkbox to choose whether to search for files with the file extension to be deleted only in the main folders or also in subfolders.
 
+RESTORE FILE FROM RECYLE BIN
+
+The application tracks deleted files by storing their file path and name in an SQLite table. If desired, the user can restore a deleted file from the recycle bin using the CTRL+R key combination. The key combination opens a C# WPF Popup window that displays the deleted files in a ListBox element. By clicking on the desired file, the program restores the file from the recycle bin to its original location. The recovery is done using the WindowsRecylceBin library created by S. Baeumlisberger. https://www.nuget.org/packages/WindowsRecylceBin

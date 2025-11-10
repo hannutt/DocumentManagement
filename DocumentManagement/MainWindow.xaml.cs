@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -15,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Microsoft.VisualBasic.FileIO;
+using WindowsRecylceBin;
 using SearchOption = System.IO.SearchOption;
 namespace DocumentManagement
 {
@@ -302,13 +303,15 @@ namespace DocumentManagement
         private void hdFileList_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             string fileName = (String)hdFileList.SelectedItem;
-            var recycleBin = "C:\\$Recycle.Bin";
+            var recycleBin = RecycleBin.ForCurrentUser();
             try
             {
-                recycleBin.Restore()
-
+                recycleBin.Restore(fileName);
+                MessageBox.Show("File returned from reycle bin");
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
-
         }
 
         private void clearContent_Click(object sender, RoutedEventArgs e)
