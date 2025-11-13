@@ -36,6 +36,7 @@ namespace DocumentManagement
         public bool mdata = false;
         public bool moveToRecycleBin = false;
         public string[] fileExtensionList;
+        public int ArraySortClicks = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -255,6 +256,7 @@ namespace DocumentManagement
             combinations.Add(Key.U, () => kb.unHideFile(hidddenFilesPopup, hdFileList));
             combinations.Add(Key.I, () => kb.imagePreview(selectedFile));
             combinations.Add(Key.Z, () => kb.zipMultipleSelectedFiles(multipleSelect));
+            combinations.Add(Key.D7, () => kb.Zip7z(multipleSelect));
             combinations.Add(Key.B, () => kb.UnzipFiles(selectedFile));
             combinations.Add(Key.R, () => kb.restoreFileFromRecycleBin(hidddenFilesPopup, hdFileList));
             //käydään dict foreachissa läpi
@@ -308,7 +310,8 @@ namespace DocumentManagement
             {
                 recycleBin.Restore(fileName);
                 MessageBox.Show("File returned from reycle bin");
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -352,6 +355,9 @@ namespace DocumentManagement
 
         }
 
-      
+        private void abcOrder_Click(object sender, RoutedEventArgs e)
+        {
+            fs.sortFiles(fileList,lbFiles,abcOrder,ArraySortClicks);
+        }
     }
 }

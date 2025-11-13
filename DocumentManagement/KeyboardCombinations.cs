@@ -1,11 +1,14 @@
-﻿using Microsoft.Win32;
+﻿using Aspose.Zip;
+using Aspose.Zip.Saving;
+using Aspose.Zip.SevenZip;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using Aspose.Zip;
 using System.IO.Packaging;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -81,43 +84,115 @@ namespace DocumentManagement
             iw.Show();
         }
 
-        public static string showDialogies()
+        public static string showFolderBrowser()
         {
             var fbd = new FolderBrowserDialog();
             fbd.ShowDialog();
             var selectedPath = fbd.SelectedPath;
             return selectedPath;
         }
+        public static string CurrentTime()
+        {
+            string currentTime = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
+            return currentTime;
+        }
+
+
         public void zipMultipleSelectedFiles(System.Collections.IList multipleSelect)
         {
             try
             {
-                var zipPath=showDialogies();
+
+                var zipPath = showFolderBrowser();
                 var archive = new Archive();
+                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                DialogResult result = MessageBox.Show("Protect ZIP with password?", "Notice", buttons);
+                if (result == DialogResult.Yes)
+                {
+                    ZipUsingPassword(zipPath, multipleSelect);
+
+                }
+                else
+                {
+                    var filename = "";
+                   
+                    foreach (var item in multipleSelect)
+                    {
+                        //haetaan polusta pelkkä tiedostonimi
+                        filename = Path.GetFileName(item.ToString());
+                        //parametreina tiedostonimi + koko tiedostopolku
+                        archive.CreateEntry(filename, item.ToString());
+                        archive.Save($"{zipPath}\\result{CurrentTime()}.zip");
+
+                    }
+
+                    MessageBox.Show("ZIP archive is ready.");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+          
+        
+        public void ZipUsingPassword(string zipPath, System.Collections.IList multipleSelect)
+        {
+            try
+            {
+                var archive = new Archive(new ArchiveEntrySettings(encryptionSettings: new TraditionalEncryptionSettings("pass")));
                 var filename = "";
-                string currentTime = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
+
                 foreach (var item in multipleSelect)
                 {
                     //haetaan polusta pelkkä tiedostonimi
-                    filename=Path.GetFileName(item.ToString());
+                    filename = Path.GetFileName(item.ToString());
                     //parametreina tiedostonimi + koko tiedostopolku
                     archive.CreateEntry(filename, item.ToString());
-                    archive.Save($"{zipPath}\\result{currentTime}.zip");
+                    archive.Save($"{zipPath}\\result{CurrentTime()}.zip");
 
                 }
-                
-                MessageBox.Show("ZIP archive is ready.");
 
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+         
+
+        }
+
+        public void Zip7z(System.Collections.IList multipleSelect)
+        {
+            try
+            {
+                var zipPath = showFolderBrowser();
+                var archive = new SevenZipArchive();
+                var filename = "";
+                string currentTime = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
+                foreach (var item in multipleSelect)
+                {
+                    //haetaan polusta pelkkä tiedostonimi
+                    filename = Path.GetFileName(item.ToString());
+                    //parametreina tiedostonimi + koko tiedostopolku
+                    archive.CreateEntry(filename, item.ToString());
+                    archive.Save($"{zipPath}\\result{currentTime}.7z");
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
         public void UnzipFiles(string selectedFile)
         {
             try
             {
-                var unZipPath = showDialogies();
+                var unZipPath = showFolderBrowser();
                 var archive = new Archive(selectedFile);
                 archive.ExtractToDirectory(unZipPath);
                 MessageBox.Show("ZIP package decompressed.");
@@ -128,7 +203,7 @@ namespace DocumentManagement
                 MessageBox.Show(ex.Message);
 
             }
-         
+
 
         }
     }

@@ -91,8 +91,28 @@ namespace DocumentManagement
                 Trace.WriteLine(ex.Message);
             }
         }
-    }
+        public void sortFiles(string[] fileList, System.Windows.Controls.ListBox lbFiles, System.Windows.Controls.Button abcOrder, int arraySortClicks)
+        {
+            arraySortClicks += 1;
+            lbFiles.Items.Clear();
+            if (arraySortClicks % 1 == 0)
+            {
+                Array.Reverse(fileList);
+                
+            }
+            else if (arraySortClicks % 2 == 0)
+            {
 
+                Array.Sort(fileList);
+                
+
+            }
+            foreach (var file in fileList)
+            {
+                lbFiles.Items.Add((string)file);
+            }
+        }
+    }
 
 
 
